@@ -61,8 +61,8 @@ public class Fornitori {
 
     public void setIdFornitore(int idFornitore) {
 
-        if (idFornitore <= 0) {
-            throw new IllegalArgumentException("ID fornitore non valido");
+        if (idFornitore < 0) {
+            throw new IllegalArgumentException("Invalid Supplier ID");
         }
 
         this.idFornitore = idFornitore;
@@ -75,7 +75,7 @@ public class Fornitori {
     public void setRagioneSociale(String ragioneSociale) {
 
         if (ragioneSociale == null || ragioneSociale.trim().isEmpty()) {
-            throw new IllegalArgumentException("Ragione sociale obbligatoria");
+            throw new IllegalArgumentException("Mandatory company name");
         }
 
         this.ragioneSociale = ragioneSociale;
@@ -88,11 +88,11 @@ public class Fornitori {
     public void setPartitaIva(String partitaIva) {
 
         if (partitaIva == null || partitaIva.trim().isEmpty()) {
-            throw new IllegalArgumentException("Partita IVA obbligatoria");
+            throw new IllegalArgumentException("VAT number required");
         }
 
         if (partitaIva.length() != 11) {
-            throw new IllegalArgumentException("Partita IVA deve avere 11 caratteri");
+            throw new IllegalArgumentException("VAT number must have 11 characters");
         }
 
         this.partitaIva = partitaIva;
@@ -105,7 +105,7 @@ public class Fornitori {
     public void setTelefono(String telefono) {
 
         if (telefono == null || telefono.trim().isEmpty()) {
-            throw new IllegalArgumentException("Telefono obbligatorio");
+            throw new IllegalArgumentException("Phone number required");
         }
 
         this.telefono = telefono;
@@ -118,11 +118,11 @@ public class Fornitori {
     public void setEmail(String email) {
 
         if (email == null || email.trim().isEmpty()) {
-            throw new IllegalArgumentException("Email obbligatoria");
+            throw new IllegalArgumentException("Email required");
         }
 
         if (!email.contains("@")) {
-            throw new IllegalArgumentException("Email non valida");
+            throw new IllegalArgumentException("Invalid email");
         }
 
         this.email = email;
@@ -135,7 +135,7 @@ public class Fornitori {
     public void setProdotto(String prodotto) {
 
         if (prodotto == null || prodotto.trim().isEmpty()) {
-            throw new IllegalArgumentException("Prodotto obbligatorio");
+            throw new IllegalArgumentException("Mandatory product");
         }
 
         this.prodotto = prodotto;
@@ -148,7 +148,7 @@ public class Fornitori {
     public void setPrezzoUnitario(double prezzoUnitario) {
 
         if (prezzoUnitario <= 0) {
-            throw new IllegalArgumentException("Prezzo non valido");
+            throw new IllegalArgumentException("Price not valid");
         }
 
         this.prezzoUnitario = prezzoUnitario;
@@ -161,7 +161,7 @@ public class Fornitori {
     public void setScontoPercentuale(int scontoPercentuale) {
 
         if (scontoPercentuale < 0 || scontoPercentuale > 100) {
-            throw new IllegalArgumentException("Sconto non valido");
+            throw new IllegalArgumentException("Discount not valid");
         }
 
         this.scontoPercentuale = scontoPercentuale;
@@ -174,7 +174,7 @@ public class Fornitori {
     public void setTempoConsegnaGiorni(int tempoConsegnaGiorni) {
 
         if (tempoConsegnaGiorni < 0) {
-            throw new IllegalArgumentException("Tempo consegna non valido");
+            throw new IllegalArgumentException("Invalid delivery time");
         }
 
         this.tempoConsegnaGiorni = tempoConsegnaGiorni;
@@ -182,16 +182,16 @@ public class Fornitori {
 
     @Override
     public String toString() {
-        return "Fornitori{" +
-                "idFornitore=" + idFornitore +
-                ", ragioneSociale=" + ragioneSociale +
-                ", partitaIva=" + partitaIva +
-                ", telefono=" + telefono +
-                ", email=" + email +
-                ", prodotto=" + prodotto +
-                ", prezzoUnitario=" + prezzoUnitario +
-                ", scontoPercentuale=" + scontoPercentuale +
-                ", tempoConsegnaGiorni=" + tempoConsegnaGiorni +
+        return "Suppliers{" +
+                "Supplier ID=" + idFornitore +
+                ", Company name=" + ragioneSociale +
+                ", VAT number=" + partitaIva +
+                ", Phone number=" + telefono +
+                ", Email=" + email +
+                ", Product=" + prodotto +
+                ", Unit price=" + prezzoUnitario +
+                ", Discount=" + scontoPercentuale +
+                ", Delivery time=" + tempoConsegnaGiorni +
                 '}';
     }
 }

@@ -250,12 +250,12 @@ public class MainGUI extends javax.swing.JFrame {
                 }
 
                 JOptionPane.showMessageDialog(this,
-                    "File salvato correttamente!");
+                    "File saved successfully!");
 
             } catch (Exception e) {
 
                 JOptionPane.showMessageDialog(this,
-                    "Errore durante il salvataggio: " + e.getMessage());
+                    "Error while saving: " + e.getMessage());
             }
         }
         
@@ -309,7 +309,7 @@ public class MainGUI extends javax.swing.JFrame {
                 }
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, "Errore: " + e.getMessage());
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
             }
         }
     }//GEN-LAST:event_LoadFileActionPerformed
@@ -318,8 +318,8 @@ public class MainGUI extends javax.swing.JFrame {
     
     if (!fileCaricato) {
         JOptionPane.showMessageDialog(this,
-            "Devi prima caricare un file!",
-            "Errore",
+            "you must load a file!",
+            "Error",
             JOptionPane.ERROR_MESSAGE);
         return;
     }
@@ -333,8 +333,8 @@ public class MainGUI extends javax.swing.JFrame {
 
         if (prodotto.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                "Inserisci un prodotto valido!",
-                "Attenzione",
+                "Enter a valid product!",
+                "Atcention",
                 JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -343,8 +343,8 @@ public class MainGUI extends javax.swing.JFrame {
 
         if (lista.isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                "Nessun fornitore trovato per questo prodotto",
-                "Info",
+                "No suppliers found for this product",
+                "INFO",
                 JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -371,8 +371,8 @@ public class MainGUI extends javax.swing.JFrame {
     private void BestPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BestPriceActionPerformed
         if (!fileCaricato) {
             JOptionPane.showMessageDialog(this,
-                "Devi prima caricare un file!",
-                "Errore",
+                "you must load a file!",
+                "Error",
                 JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -387,7 +387,7 @@ public class MainGUI extends javax.swing.JFrame {
 
         if (lista.isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                "Nessun fornitore trovato!",
+                "No supplier present!",
                 "INFO",
                 JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -416,15 +416,15 @@ public class MainGUI extends javax.swing.JFrame {
     private void ShowAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowAllActionPerformed
         if (!fileCaricato) {
             JOptionPane.showMessageDialog(this,
-                "Devi prima caricare un file!",
-                "Errore",
+                "you must load a file!",
+                "Error",
                 JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (gestore.getFornitori().isEmpty()) {
             JOptionPane.showMessageDialog(this,
-                "Nessun fornitore presente!",
+                "No supplier present!",
                 "INFO",
                 JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -453,17 +453,16 @@ public class MainGUI extends javax.swing.JFrame {
     private void SuppliersAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SuppliersAddActionPerformed
     if (!fileCaricato) {
         JOptionPane.showMessageDialog(this,
-            "Devi prima caricare il file!",
-            "Errore",
+            "you must load a file!",
+            "Error",
             JOptionPane.ERROR_MESSAGE);
         return;
     }
-
+        
     try {
 
-        Fornitori f = new Fornitori();
 
-        String idStr = JOptionPane.showInputDialog(this, "ID Fornitore:");
+        String idStr = JOptionPane.showInputDialog(this, "ID Supplier:");
         if (idStr == null || idStr.trim().isEmpty()) return;
 
         int id = Integer.parseInt(idStr);
@@ -471,29 +470,39 @@ public class MainGUI extends javax.swing.JFrame {
         for (Fornitori l : gestore.getFornitori()) {
             if (l.getIdFornitore() == id) {
                 JOptionPane.showMessageDialog(this,
-                    "ID già esistente!",
-                    "Errore",
+                    "ID already exists!",
+                    "Error",
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
 
-        f.setIdFornitore(id);
-        f.setRagioneSociale(JOptionPane.showInputDialog(this, "Ragione Sociale:"));
-        f.setPartitaIva(JOptionPane.showInputDialog(this, "Partita IVA:"));
-        f.setTelefono(JOptionPane.showInputDialog(this, "Telefono:"));
-        f.setEmail(JOptionPane.showInputDialog(this, "Email:"));
-        f.setProdotto(JOptionPane.showInputDialog(this, "Prodotto:"));
+        String ragioneSociale = JOptionPane.showInputDialog(this, "Company name:");
+        String partitaIva = JOptionPane.showInputDialog(this, "VAT number:");
+        String telefono = JOptionPane.showInputDialog(this, "Phone number:");
+        String email = JOptionPane.showInputDialog(this, "Email:");
+        String prodotto = JOptionPane.showInputDialog(this, "Product:");
+        String prezzoStr = JOptionPane.showInputDialog(this, "Unit price:");
+        String scontoStr = JOptionPane.showInputDialog(this, "Discount (%):");
+        String consegnaStr = JOptionPane.showInputDialog(this, "Delivery time (days):");
 
-        String prezzoStr = JOptionPane.showInputDialog(this, "Prezzo Unitario:");
-        String scontoStr = JOptionPane.showInputDialog(this, "Sconto (%):");
-        String consegnaStr = JOptionPane.showInputDialog(this, "Tempo consegna (giorni):");
+        if (idStr == null || ragioneSociale == null || partitaIva == null ||
+            telefono == null || email == null || prodotto == null ||
+            prezzoStr == null || scontoStr == null || consegnaStr == null) {
+            return;
+        }
 
-        if (prezzoStr == null || scontoStr == null || consegnaStr == null) return;
-
-        f.setPrezzoUnitario(Double.parseDouble(prezzoStr));
-        f.setScontoPercentuale(Integer.parseInt(scontoStr));
-        f.setTempoConsegnaGiorni(Integer.parseInt(consegnaStr));
+        Fornitori f = new Fornitori(
+            Integer.parseInt(idStr),
+            ragioneSociale,
+            partitaIva,
+            telefono,
+            email,
+            prodotto,
+            Double.parseDouble(prezzoStr),
+            Integer.parseInt(scontoStr),
+            Integer.parseInt(consegnaStr)
+        );
 
         gestore.aggiungi(f);
 
@@ -511,28 +520,28 @@ public class MainGUI extends javax.swing.JFrame {
             f.getTempoConsegnaGiorni()
         });
 
-        JOptionPane.showMessageDialog(this, "Fornitore aggiunto con successo!");
+        JOptionPane.showMessageDialog(this, "Supplier added successfully!");
 
     } 
     catch (NumberFormatException e) {
 
         JOptionPane.showMessageDialog(this,
-            "Inserisci valori numerici validi!",
-            "Errore",
+            "Please enter valid numeric values!",
+            "Error",
             JOptionPane.ERROR_MESSAGE);
     }
     catch (IllegalArgumentException e) {
 
         JOptionPane.showMessageDialog(this,
             e.getMessage(),
-            "Errore",
+            "Error",
             JOptionPane.ERROR_MESSAGE);
     }
     catch (Exception e) {
 
         JOptionPane.showMessageDialog(this,
-            "Errore generico!",
-            "Errore",
+            "Generic error!",
+            "Error",
             JOptionPane.ERROR_MESSAGE);
     }
 
@@ -541,15 +550,15 @@ public class MainGUI extends javax.swing.JFrame {
     private void SuppliersRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SuppliersRemoveActionPerformed
         if (!fileCaricato) {
             JOptionPane.showMessageDialog(this,
-                "Devi prima caricare il file!",
-                "Errore",
+                "you must load a file!",
+                "Error",
                 JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         try {
 
-            String idStr = JOptionPane.showInputDialog(this, "Inserisci ID Fornitore da eliminare:");
+            String idStr = JOptionPane.showInputDialog(this, "Enter Supplier ID to delete:");
 
             if (idStr == null || idStr.trim().isEmpty()) return;
 
@@ -567,15 +576,15 @@ public class MainGUI extends javax.swing.JFrame {
 
             if (daEliminare == null) {
                 JOptionPane.showMessageDialog(this,
-                    "Fornitore non trovato!",
-                    "Errore",
+                    "Supplier not found!",
+                    "Error",
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             int conferma = JOptionPane.showConfirmDialog(this,
-                "Vuoi eliminare il fornitore con ID " + id + "?",
-                "Conferma eliminazione",
+                "Do you want to delete the supplier with ID " + id + "?",
+                "Confirm deletion",
                 JOptionPane.YES_NO_OPTION);
 
             if (conferma != JOptionPane.YES_OPTION) {
@@ -603,28 +612,28 @@ public class MainGUI extends javax.swing.JFrame {
                 });
             }
             JOptionPane.showMessageDialog(this,
-                "Fornitore eliminato con successo!");
+                "Supplier successfully deleted!");
 
         } 
         catch (NumberFormatException e) {
 
             JOptionPane.showMessageDialog(this,
-                "Inserisci valori numerici validi!",
-                "Errore",
+                "Please enter valid numeric values!",
+                "Error",
                 JOptionPane.ERROR_MESSAGE);
         }
         catch (IllegalArgumentException e) {
 
             JOptionPane.showMessageDialog(this,
                 e.getMessage(),
-                "Errore",
+                "Error",
                 JOptionPane.ERROR_MESSAGE);
         }
         catch (Exception e) {
 
             JOptionPane.showMessageDialog(this,
-                "Errore generico!",
-                "Errore",
+                "Generic error!",
+                "Error",
                 JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_SuppliersRemoveActionPerformed
